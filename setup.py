@@ -10,7 +10,7 @@ if "tests" in packages:
 
 setup(
     name='TwitchEventSub',
-    version='0.1.0',
+    version='0.1.1',
     packages=packages,
     url='https://github.com/CPSuperstore/TwitchEventSub',
     license='MIT',
