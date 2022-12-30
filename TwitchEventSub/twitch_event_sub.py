@@ -56,6 +56,8 @@ class TwitchEventSub(abc.ABC):
         self._scopes.extend(additional_scopes)
 
         self._scopes = list(set(self._scopes))
+        self._scopes.sort()
+
         self._logger.info("Configuration requires {} scope(s)".format(len(self._scopes)))
 
         self._event_type_register = {
