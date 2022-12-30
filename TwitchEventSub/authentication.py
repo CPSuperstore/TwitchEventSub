@@ -72,7 +72,7 @@ def build_url(url: str, args: dict):
 def get_login_url(client_id: str, scopes: typing.List[str]) -> str:
     return build_url("https://id.twitch.tv/oauth2/authorize?", {
         "client_id": client_id,
-        "scope": ";".join(scopes),
+        "scope": " ".join(scopes),
         "redirect_uri": "http://localhost:5000",
         "response_type": "code"
     })
