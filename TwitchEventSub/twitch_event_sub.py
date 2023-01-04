@@ -190,6 +190,8 @@ class TwitchEventSub(abc.ABC):
         return True
 
     def send_api_request(self, endpoint: str, method: str, params: dict = None, body: dict = None) -> requests.Response:
+        args = locals()
+
         if body is None:
             body = {}
 
@@ -199,7 +201,7 @@ class TwitchEventSub(abc.ABC):
         if not endpoint.startswith("/"):
             endpoint = "/" + endpoint
 
-        return requests.request(
+        r = requests.request(
             method, "https://api.twitch.tv" + endpoint,
             headers={
                 "Authorization": "Bearer {}".format(self._access_token),
@@ -207,6 +209,14 @@ class TwitchEventSub(abc.ABC):
             },
             params=params, json=body
         )
+
+        if r.status_code == 401:
+            logging.warning("Access token has expired. Refreshing and resending request...")
+            self.refresh_token()
+
+            return self.send_api_request(**args)
+
+        return r
 
     def _add_subscription(self, sub_type: event_types.EventType):
         logging.info("Subscribing to websocket event {}".format(sub_type.value))
