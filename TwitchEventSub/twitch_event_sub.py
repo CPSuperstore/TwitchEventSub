@@ -21,7 +21,7 @@ class TwitchEventSub(abc.ABC):
             self, client_id: str, client_secret: str, subscribed_events: typing.List[event_types.EventType],
             additional_scopes: typing.List[str] = None,
             persist_credentials: bool = True, credentials_path: str = "salts.json",
-            ws_url: str = 'wss://eventsub-beta.wss.twitch.tv/ws'
+            ws_url: str = 'wss://eventsub.wss.twitch.tv/ws'
     ):
         if additional_scopes is None:
             additional_scopes = []
